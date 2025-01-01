@@ -2,27 +2,36 @@ const express = require("express");
 const { adminAuth, userAuth } = require("./middlewares/auth");
 const app = express();
 
-app.use("/admin", adminAuth);
-
-app.get("/admin/getAllData", (req, res, next) => {
-  //Logic for checking if request is authorized.
-  // const token = req.headers.token;
-  // const isAdminAuthorized = token === "abc";
-
-  res.send("All data sent");
+app.use("/user", (req, res, next) => {
+  throw new Error("abhinav error");
 });
 
-app.get("/admin/deleteUser", (req, res, next) => {
-  res.status(201).send("Deleted a user");
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("Something went wrong");
+  }
 });
+// app.use("/admin", adminAuth);
 
-app.get("/admin/editUser", (req, res, next) => {
-  res.send("User edited.");
-});
+// app.get("/admin/getAllData", (req, res, next) => {
+//   //Logic for checking if request is authorized.
+//   // const token = req.headers.token;
+//   // const isAdminAuthorized = token === "abc";
 
-app.get("/user/getAllData", userAuth, (req, res, next) => {
-  res.send("User fetched successfully");
-});
+//   res.send("All data sent");
+// });
+
+// app.get("/admin/deleteUser", (req, res, next) => {
+//   res.status(201).send("Deleted a user");
+// });
+
+// app.get("/admin/editUser", (req, res, next) => {
+//   res.send("User edited.");
+// });
+
+// app.get("/user/getAllData", userAuth, (req, res, next) => {
+//   res.send("User fetched successfully");
+// });
 
 // app.get("/user", (req, res) => {
 //   res.send({ firstName: "Abhinav", lastName: "Anand" });
